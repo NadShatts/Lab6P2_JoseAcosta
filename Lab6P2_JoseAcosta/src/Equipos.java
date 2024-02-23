@@ -21,6 +21,13 @@ public class Equipos {
         this.estadio = estadio;
     }
 
+    public Equipos(String nombre, String pais) {
+        this.nombre = nombre;
+        this.pais = pais;
+    }
+    
+    
+
     public String getNombre() {
         return nombre;
     }
@@ -55,9 +62,8 @@ public class Equipos {
 
     @Override
     public String toString() {
-        return "Equipos{" + "nombre=" + nombre + ", pais=" + pais + ", ciudad=" + ciudad + ", estadio=" + estadio + '}';
-    }
+        return nombre;
     
     
-    
+}
 }
