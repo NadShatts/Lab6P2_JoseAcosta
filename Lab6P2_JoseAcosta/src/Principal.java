@@ -19,7 +19,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-       
+
     }
 
     /**
@@ -533,34 +533,30 @@ public class Principal extends javax.swing.JFrame {
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         DefaultTreeModel modeloArbol = (DefaultTreeModel) listaArbol.getModel();
         DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloArbol.getRoot();
-        DefaultMutableTreeNode nodoPersona;
-        nodoPersona = new DefaultMutableTreeNode(new Equipos(paisEquipo.getText() ,nombreEquipo.getText()));
-        DefaultMutableTreeNode pais = new DefaultMutableTreeNode(paisEquipo.getText());
-        DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(nombreEquipo.getText());
-        pais.add(equipo);
-        nodoPersona.add(pais);
-        raiz.add(nodoPersona);
+        int xd = -1;
+        for (int i = 0; i < raiz.getChildCount(); i++) {
+            DefaultMutableTreeNode nodoPais = (DefaultMutableTreeNode) raiz.getChildAt(i);
+            if (nodoPais.toString().equals(paisEquipo.getText())) {
+                DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(nombreEquipo.getText());
+                nodoPais.add(equipo);
+                xd = 1;
+               
+            }
+        }
+        if (xd == -1) {
+            DefaultMutableTreeNode nodoPais = new DefaultMutableTreeNode(paisEquipo.getText());
+            DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(nombreEquipo.getText());
+            nodoPais.add(equipo);
+            raiz.add(nodoPais);
+        }
+
+        modeloArbol.reload();
         paisEquipo.setText("");
         nombreEquipo.setText("");
         ciudadEquipo.setText("");
         estadioEquipo.setText("");
         JOptionPane.showMessageDialog(this, "Agregado exitosamente");
         
-        int loco = -1;
-        for (int i = 0; i < raiz.getChildCount(); i++) {
-            if(raiz.getChildAt(i).toString().equals(paisEquipo.getText())){
-                 DefaultMutableTreeNode p = new DefaultMutableTreeNode(new Equipos(paisEquipo.getText() ,nombreEquipo.getText()));
-                ((DefaultMutableTreeNode) raiz.getChildAt(i)).add(p);
-                loco = 1;
-            }     
-        }
-        if(loco == -1){
-            DefaultMutableTreeNode o = new DefaultMutableTreeNode(paisEquipo.getText());
-            DefaultMutableTreeNode ñ = new DefaultMutableTreeNode(new Equipos(paisEquipo.getText() ,nombreEquipo.getText(), ciudadEquipo.getText(), estadioEquipo.getText()));
-        o.add(ñ);
-        raiz.add(o);
-        }
-        modeloArbol.reload();
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void listajugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listajugadoresMouseClicked
@@ -614,11 +610,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_listaArbolMouseClicked
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
-       if(listajugadores.getSelectedIndex()>= 0){
-           DefaultTreeModel modelo4 = (DefaultTreeModel) listaArbol.getModel();
-           DefaultListModel modelolista = (DefaultListModel) modelo4.getRoot();
-           
-       } 
+        if (listajugadores.getSelectedIndex() >= 0) {
+            DefaultTreeModel modelo4 = (DefaultTreeModel) listaArbol.getModel();
+            DefaultMutableTreeNode raiz4 = (DefaultMutableTreeNode) modelo4.getRoot();
+            DefaultListModel modelolista = (DefaultListModel) listajugadores.getModel();
+            
+
+        }
     }//GEN-LAST:event_jButton7MouseClicked
 
     public void crearEquipo() {
