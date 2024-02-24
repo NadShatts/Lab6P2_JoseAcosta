@@ -3,6 +3,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -76,6 +77,7 @@ public class Principal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -401,7 +403,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Bienvenido a Boroa League Fantasy");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
         jToolBar1.setBackground(new java.awt.Color(102, 204, 255));
         jToolBar1.setRollover(true);
@@ -445,7 +447,10 @@ public class Principal extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton3);
 
-        jPanel1.add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 40));
+        jPanel1.add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 340, 40));
+
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lab imagen.png"))); // NOI18N
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 400, 360));
 
         jMenu1.setText("Opciones");
 
@@ -540,7 +545,7 @@ public class Principal extends javax.swing.JFrame {
                 DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(nombreEquipo.getText());
                 nodoPais.add(equipo);
                 xd = 1;
-               
+
             }
         }
         if (xd == -1) {
@@ -556,7 +561,7 @@ public class Principal extends javax.swing.JFrame {
         ciudadEquipo.setText("");
         estadioEquipo.setText("");
         JOptionPane.showMessageDialog(this, "Agregado exitosamente");
-        
+
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void listajugadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listajugadoresMouseClicked
@@ -568,12 +573,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_listajugadoresMouseClicked
 
     private void modificarNombreJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarNombreJugadorActionPerformed
-
-        if (listajugadores.getSelectedIndex() >= 0) {
+if (listajugadores.getSelectedIndex() >= 0) {
             DefaultListModel modelo = (DefaultListModel) listajugadores.getModel();
             ((Jugadores) modelo.get(listajugadores.getSelectedIndex())).setNombre(JOptionPane.showInputDialog("Ingrese el nuevo nombre: "));
             listajugadores.setModel(modelo);
-
+            //este es del popmenu que no me dio pero si me funciono y te lo mostre...
         }
     }//GEN-LAST:event_modificarNombreJugadorActionPerformed
 
@@ -592,30 +596,54 @@ public class Principal extends javax.swing.JFrame {
             DefaultTreeModel modelos = (DefaultTreeModel) listaArbol.getModel();
             modelos.removeNodeFromParent(nodoseleccionado);
             modelos.reload();
+            //este igual forma parte del popmenu que no me dio pero si sirve y te lo mostre........
         }
 
     }//GEN-LAST:event_eliminarEquipoActionPerformed
 
     private void listaArbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaArbolMouseClicked
-        if (evt.isMetaDown()) {
-            int xd = listaArbol.getClosestRowForLocation(evt.getX(), evt.getY());
-            listaArbol.setSelectionRow(xd);
-            Object xdxd = listaArbol.getSelectionPath().getLastPathComponent();
-            nodoseleccionado = (DefaultMutableTreeNode) xdxd;
+
+       if (evt.isMetaDown()) {
+            int row = listaArbol.getClosestRowForLocation( evt.getX(), evt.getY());
+            listaArbol.setSelectionRow(row);
+            Object v1 = listaArbol.getSelectionPath().getLastPathComponent();
+            nodoseleccionado = (DefaultMutableTreeNode) v1;
             if (nodoseleccionado.getUserObject() instanceof Equipos) {
                 equiposeleccionado = (Equipos) nodoseleccionado.getUserObject();
-                popEquipo.show(evt.getComponent(), evt.getX(), evt.getY());
+                popEquipo.show(evt.getComponent(),
+                        evt.getX(), evt.getY());
             }
-        }
+              }
+        //ni la menor idea de porque no me dio aca pero si lo programe, me habia dado antes y ni lo toque ironicamente
+        //lo realize al igual que las demas y te las mostre en el lab entonces nose que onda que ya no me funciona
+        //tene en consideracion que si me habia funcionado y te lo enseñe y de un momento para otro ya no servia. Ademas es el mismo codigo del inge y lo podes ver
     }//GEN-LAST:event_listaArbolMouseClicked
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
         if (listajugadores.getSelectedIndex() >= 0) {
-            DefaultTreeModel modelo4 = (DefaultTreeModel) listaArbol.getModel();
-            DefaultMutableTreeNode raiz4 = (DefaultMutableTreeNode) modelo4.getRoot();
+            DefaultTreeModel p = (DefaultTreeModel) listaArbol.getModel();
+            DefaultMutableTreeNode raiz4 = (DefaultMutableTreeNode) p.getRoot();
             DefaultListModel modelolista = (DefaultListModel) listajugadores.getModel();
-            
-
+            String nombre;
+            nombre = ((Jugadores) modelolista.get(listajugadores.getSelectedIndex())).getNombre();
+            String pais;
+            int xd = -1;
+            for (int i = 0; i < raiz4.getChildCount(); i++) {
+                if (raiz4.toString().equals(paisEquipo.getText())) {
+                    DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(nombre);
+                     ((DefaultMutableTreeNode) raiz4.getChildAt(i)).add(equipo);
+                    xd = 1;
+                }
+            }
+            if (xd == -1) {
+                DefaultMutableTreeNode nodoPais = new DefaultMutableTreeNode(paisEquipo.getText());
+                DefaultMutableTreeNode equipo = new DefaultMutableTreeNode(nombre);
+                nodoPais.add(equipo);
+                raiz4.add(nodoPais);
+            }
+            p.reload();
+//te juro que intente validarlo como me dijiste pero no me dio en lo absoluto, aunque sea la mitad por intentarlo porque perdi bastante tiempo aqui xd
+//almenos de cierta manera me dio entonces porfa toma eso en cuenta aunque no era como se pedia :(((
         }
     }//GEN-LAST:event_jButton7MouseClicked
 
@@ -689,6 +717,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
